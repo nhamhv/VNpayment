@@ -1,0 +1,23 @@
+{
+    "name": "nham/payment",
+    "description": "",
+    "authors": [
+        {
+            "name": "HoangNham",
+            "email": "hoangnham01@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Nham\\Payment\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
