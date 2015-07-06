@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by Hoang Nham
- * Email: hoangnham01@gmail.com
- * Date: 28/05/2015
- */
-
 namespace Nham\Payment\Cards;
 use Config;
 

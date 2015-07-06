@@ -1,5 +1,4 @@
-﻿<?php
-namespace Nham\Payment\BaoKim;
+﻿<?php namespace Nham\Payment\BaoKim;
 
 use Config;
 

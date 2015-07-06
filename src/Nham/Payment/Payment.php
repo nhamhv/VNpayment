@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nham
- * Email: hoangnham01@gmail.com
- * Date: 02/07/2015
- * Time: 4:21 CH
- */
+
 namespace Nham\Payment;
 
 use Config;
