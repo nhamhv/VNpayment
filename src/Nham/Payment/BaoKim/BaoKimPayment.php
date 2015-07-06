@@ -1,6 +1,8 @@
 ﻿<?php
 namespace Nham\Payment\BaoKim;
 
+use Config;
+
 /**
  *
  *        Phiên bản: 1.1
@@ -10,8 +12,6 @@ namespace Nham\Payment\BaoKim;
  *                        - Xác thực tính chính xác của thông tin đơn hàng được gửi về từ baokim.vn.
  *
  */
-use Config;
-
 class BaoKimPayment
 {
     /**
@@ -55,7 +55,6 @@ class BaoKimPayment
     {
 
         $totalAmount = str_replace('.', '', $totalAmount);
-        $base_url = url();
         $currency = 'VND'; // USD
         // Mảng các tham số chuyển tới baokim.vn
         $params = array(
