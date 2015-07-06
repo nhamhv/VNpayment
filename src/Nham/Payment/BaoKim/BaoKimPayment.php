@@ -27,7 +27,15 @@ class BaoKimPayment
      * http://kiemthu.baokim.vn/payment/order/version11' => ('Trang kiểm thử')
      * Chọn Save configuration để áp dụng thay đổi
      * Hàm xây dựng url chuyển đến BaoKim.vn thực hiện thanh toán, trong đó có tham số mã hóa (còn gọi là public key)
-     * @param array $data
+     * @param string $orderCode         Mã đơn hàng
+     * @param string $totalAmount       Giá trị đơn hàng
+     * @param string $orderDescription  Mô tả đơn hàng
+     * @param string $urlSuccess        Url trả về khi thanh toán thành công
+     * @param string $urlCancel         Url trả về khi hủy thanh toán
+     * @param string $payerName
+     * @param string $payerEmail
+     * @param string $payerPhoneNo
+     * @param string $address
      *       $order_id                Mã đơn hàng
      *       $business            Email tài khoản người bán
      *       $total_amount            Giá trị đơn hàng
@@ -43,28 +51,28 @@ class BaoKimPayment
      *       null $shipping_address
      * @return string url cần tạo
      */
-    public function createRequestUrl($data)
+    public function createRequestUrl($orderCode, $totalAmount, $orderDescription, $urlSuccess, $urlCancel, $payerName, $payerEmail,$payerPhoneNo, $address)
     {
 
-        $total_amount = str_replace('.', '', $data['total_amount']);
+        $totalAmount = str_replace('.', '', $totalAmount);
         $base_url = url();
         $currency = 'VND'; // USD
         // Mảng các tham số chuyển tới baokim.vn
         $params = array(
             'merchant_id'       => strval(Config::get('payment::BaoKim.MERCHANT_ID')),
-            'order_id'          => strval($data['order_id']),
+            'order_id'          => strval($orderCode),
             'business'          => strval(Config::get('payment::BaoKim.EMAIL_BUSINESS')),
-            'total_amount'      => strval($total_amount),
+            'total_amount'      => strval($totalAmount),
             'shipping_fee'      => strval('0'),
             'tax_fee'           => strval('0'),
-            'order_description' => strval('Thanh toán đơn hàng từ Website ' . $base_url . ' với mã đơn hàng ' . $data['order_id']),
-            'url_success'       => strtolower($data['url_success']),
-            'url_cancel'        => strtolower($data['url_cancel']),
+            'order_description' => $orderDescription,
+            'url_success'       => strtolower($urlSuccess),
+            'url_cancel'        => strtolower($urlCancel),
             'url_detail'        => strtolower(''),
-            'payer_name'        => strval($data['payer_name']),
-            'payer_email'       => strval($data['payer_email']),
-            'payer_phone_no'    => strval($data['payer_phone_no']),
-            'shipping_address'  => strval($data['address']),
+            'payer_name'        => strval($payerName),
+            'payer_email'       => strval($payerEmail),
+            'payer_phone_no'    => strval($payerPhoneNo),
+            'shipping_address'  => strval($address),
             'currency'          => strval($currency),
 
         );
@@ -101,7 +109,6 @@ class BaoKimPayment
     public function verifyResponseUrl($url_params = array())
     {
         if (empty($url_params['checksum'])) {
-            echo "invalid parameters: checksum is missing";
             return false;
         }
 

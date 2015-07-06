@@ -3,6 +3,7 @@
 namespace Nham\Payment\NganLuong;
 
 include_once 'nusoap.php';
+
 /**
  * Class NL_MicroCheckout
  *
@@ -54,15 +55,9 @@ class MicroCheckout
         return false;
     }
 
-    public function checkReturnUrlAuto()
+    public function checkReturnUrlAuto($receiver, $order_code, $amount, $currency_code, $token_code, $checksum)
     {
-        $receiver = @$_GET['receiver'];
-        $order_code = @$_GET['order_code'];
-        $amount = @$_GET['amount'];
-        $currency_code = @$_GET['currency_code'];
-        $this->tokenCode = @$_GET['token_code'];
-        $checksum = @$_GET['checksum'];
-        return $this->checkReturnUrl($receiver, $order_code, $amount, $currency_code, $this->tokenCode, $checksum);
+        return $this->checkReturnUrl($receiver, $order_code, $amount, $currency_code, $token_code, $checksum);
     }
 
     public function getTokenCode()
@@ -73,19 +68,19 @@ class MicroCheckout
     public function checkReturnUrl($receiver, $order_code, $amount, $currency_code, $token_code, $checksum)
     {
         $this->tokenCode = $token_code;
-        $md5 = $this->merchantSiteCode.$receiver.$order_code.$amount.$currency_code.$token_code.$this->merchantPassword;
+        $md5 = $this->merchantSiteCode . $receiver . $order_code . $amount . $currency_code . $token_code . $this->merchantPassword;
         return (md5($md5) == $checksum);
     }
 
     private function _call($function_name, $inputs)
     {
         $params = array(
-            'merchant_site_code'	=> $this->merchantSiteCode,
-            'checksum'				=> $this->_makeChecksum($inputs),
-            'params'				=> '<params>'.$this->_convertArrayToXML($inputs).'</params>'
+            'merchant_site_code' => $this->merchantSiteCode,
+            'checksum'           => $this->_makeChecksum($inputs),
+            'params'             => '<params>' . $this->_convertArrayToXML($inputs) . '</params>'
         );
 
-        $client	= new nusoap_client($this->urlWS, true);
+        $client = new nusoap_client($this->urlWS, true);
         $result = $client->call($function_name, $params);
         //	echo '<h2>Request</h2><pre>' . htmlspecialchars($client->request, ENT_QUOTES) . '</pre>';
         //echo '<h2>Response</h2><pre>' . htmlspecialchars($client->response, ENT_QUOTES) . '</pre>';
@@ -118,9 +113,9 @@ class MicroCheckout
         $md5 = '';
         $keys = $this->_getMapKeys();
         foreach ($keys as $key) {
-            $md5.= strval(@$params[$key]);
+            $md5 .= strval(@$params[$key]);
         }
-        $md5.= $this->merchantPassword;
+        $md5 .= $this->merchantPassword;
         return md5($md5);
     }
 
@@ -174,17 +169,18 @@ class MicroCheckout
     {
         $result = "";
         if (!empty($array)) {
-            foreach ($array as $key=>$value) {
-                $result.= is_numeric($key) ? "<item>" : "<$key>";
+            foreach ($array as $key => $value) {
+                $result .= is_numeric($key) ? "<item>" : "<$key>";
                 if (is_array($value)) {
-                    $result.= $this->_convertArrayToXML($value);
+                    $result .= $this->_convertArrayToXML($value);
                 } else {
-                    $result.= htmlspecialchars($value);
+                    $result .= htmlspecialchars($value);
                 }
-                $result.= is_numeric($key) ? "</item>" : "</$key>";
+                $result .= is_numeric($key) ? "</item>" : "</$key>";
             }
         }
         return $result;
     }
 }
+
 ?>
