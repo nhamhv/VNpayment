@@ -85,7 +85,7 @@ class BaoKim
         } else {
             return array(
                 'success' => false,
-                'msg' => $result['errorMessage'],
+                'msg' => empty($result['errorMessage']) ? 'Hệ thống Telco bị lỗi hoặc quá tải, thẻ chưa bị trừ' : $result['errorMessage'],
                 'status' => $status
             );
         }

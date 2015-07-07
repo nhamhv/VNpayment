@@ -1,15 +1,5 @@
-﻿<?php
+<?php
 namespace Nham\Payment\BaoKim;
-
-/**
- *
- *        Phiên bản: 1.1
- *        Tên lớp: BaoKimPayment
- *        Chức năng: Tích hợp thanh toán qua baokim.vn cho các merchant site có đăng ký API
- *                        - Xây dựng URL chuyển thông tin tới baokim.vn để xử lý việc thanh toán cho merchant site.
- *                        - Xác thực tính chính xác của thông tin đơn hàng được gửi về từ baokim.vn.
- *
- */
 use Config;
 
 class BaoKimPayment
