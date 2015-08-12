@@ -3,7 +3,8 @@
 namespace Nham\Payment\NganLuong;
 
 include_once 'nusoap.php';
-
+use nusoap_client;
+use DOMDocument;
 /**
  * Class NL_MicroCheckout
  *

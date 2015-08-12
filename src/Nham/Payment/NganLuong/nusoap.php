@@ -1,5 +1,4 @@
 <?php
-namespace Nham\Payment\NganLuong;
 /*
 $Id: nusoap.php,v 1.123 2010/04/26 20:15:08 snichol Exp $
 

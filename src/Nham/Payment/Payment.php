@@ -80,7 +80,7 @@ class Payment
             'return_url'               => $returnUrl,
             'cancel_url'               => $cancelUrl,
             'language'                 => 'vi',
-            'items'                    => $items
+            'items'                    => array($items)
         );
         $URL_WS = Config::get('payment::SANDBOX') ? Config::get('payment::NganLuong.URL_WS_SANDBOX') : Config::get('payment::NganLuong.URL_WS');
         $obj = new MicroCheckout(Config::get('payment::NganLuong.MERCHANT_ID'), Config::get('payment::NganLuong.MERCHANT_PASS'), $URL_WS);
